@@ -12,6 +12,12 @@ qVDim (QVector u) = length u
 qVMap :: (Complex Float -> Complex Float) -> QVector -> QVector
 qVMap func (QVector xs) = QVector $ map func xs;
 
+qVLength :: QVector -> Float
+qVLength (QVector xs) = realPart $ sum $ map (\a -> (abs a) ^ 2) xs
+
+isUnitary :: QVector -> Bool
+isUnitary vec = abs(1.0 - qVLength vec) <= (1 / (10^6))
+
 vplus :: QVector -> QVector -> QVector
 (QVector u) `vplus` (QVector v) 
 	| length u /= length v = error "operands must have the same dimension"

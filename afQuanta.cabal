@@ -16,10 +16,12 @@ maintainer:          afmichael73@gmail.com
 build-type:          Simple
 extra-source-files:  CHANGELOG.md, README.md
 
+
 executable afQuanta
   main-is:             Main.hs
   -- other-modules:
   -- other-extensions:
   build-depends:       base >=4.5 && <4.6
+						
   hs-source-dirs:      . && Tools
   default-language:    Haskell2010
