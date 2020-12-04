@@ -101,6 +101,9 @@ qShow (QMatrix xs) =
 		}
 
 
+times :: Float -> QMatrix -> QMatrix
+n `times` mat = qMap (\v -> (n :+ 0) * v) mat
+
 -- Ex qMat [[1,2,3],[3,4,5],[3,1,1]] `dot` qMat [[1,0,2],[1,-1,3],[5,3,8]]
 dot :: QMatrix -> QMatrix -> QMatrix
 (QMatrix a) `dot` (QMatrix b)

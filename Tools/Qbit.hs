@@ -9,3 +9,9 @@ qBit :: QVector -> QBit
 qBit vec
 	| not (isUnitary vec) = error "Vec should be unitary"
 	| otherwise = QBit vec
+
+qBitVec :: QBit -> QVector
+qBitVec (QBit v) = v
+
+qBitDim :: QBit -> Int
+qBitDim qb = qVDim $ qBitVec qb

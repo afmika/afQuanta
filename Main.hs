@@ -4,6 +4,7 @@ import Data.Complex
 import QVector
 import QMatrix
 import QBit
+import QGates
 
 main :: IO ()
 
@@ -15,5 +16,7 @@ main =
  	in
  		do {
 	 		putStrLn (show psi);
-		 	qShow transf
+	 		putStrLn ("N = " ++ (show $ qBitDim psi));
+		 	qShow transf;
+	 		qShow hadamard2;
 	 	}
