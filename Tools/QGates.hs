@@ -8,7 +8,6 @@ data QGate = QGate (QMatrix) deriving (Show, Eq)
 qGateMatrix :: QGate -> QMatrix
 qGateMatrix (QGate mat) = mat
 
--- @todo : unitary matrix control
 qGate :: QMatrix -> QGate
 qGate mat = QGate mat
 
