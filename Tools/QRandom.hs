@@ -9,8 +9,10 @@ import Data.Time
 import Data.Ratio
 
 -- helpers
+
 bigint = 2147483562
--- IO Operations (which communicates with the outside world)
+
+-- IO Operation (which communicates with the outside world)
 qCurrentTime :: IO (Integer, Integer)
 qCurrentTime = do
 		utc <- getCurrentTime
