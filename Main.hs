@@ -13,7 +13,7 @@ main =
 		transf = qEye (qVDim state) -- builds an Id matrix with the same dim
 		gate   = qGate transf -- makes a new gate using the transf matrix
 		
-		-- making a qBit from a normalized 2^N vector
+		-- builds a qBit from a normalized 2^N vector
 		comp   = map fromIntegral $ take 4 [1..]
 		psi    = qBit $ qVNormalize $ qVec $ comp
 
