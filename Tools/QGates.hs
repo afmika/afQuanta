@@ -1,3 +1,8 @@
+----------------------------------------
+-- author : afmika
+-- email  : afmichael73@gmail.com
+----------------------------------------
+
 module QGates where
 
 import Data.Complex

@@ -1,3 +1,8 @@
+----------------------------------------
+-- author : afmika
+-- email  : afmichael73@gmail.com
+----------------------------------------
+
 module QMatrix where
 
 import QVector
