@@ -12,16 +12,6 @@ import Data.Ratio
 
 bigint = 2147483562
 
--- IO Operation (which communicates with the outside world)
-qCurrentTime :: IO (Integer, Integer)
-qCurrentTime = do
-		utc <- getCurrentTime
-		let 
-			dtime = toRational $ utctDayTime utc
-			sec   = numerator dtime
-			psec  = denominator dtime
-		return (sec, psec)
-
 -- random generator
 
 -- Xnext = (aXn + c) mod m
@@ -34,6 +24,16 @@ qRand :: Int -> Int -> Int
 qRand seed 0   = qPRNGDef seed
 qRand seed iteration = qRand (qPRNGDef seed) (iteration - 1)
 
+
+-- IO Operation (by which the outside world communicates with the program)
+qCurrentTime :: IO (Integer, Integer)
+qCurrentTime = do
+		utc <- getCurrentTime
+		let 
+			dtime = toRational $ utctDayTime utc
+			sec   = numerator dtime
+			psec  = denominator dtime
+		return (sec, psec)
 
 qIORand :: IO (Int)
 qIORand = do
