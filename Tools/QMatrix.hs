@@ -45,7 +45,7 @@ qMat xs
 
 qZero :: Int -> QMatrix
 qZero n = 
-	QMatrix [[0 | n <- idx] | m <- idx] 
+	qMat [[0 | n <- idx] | m <- idx] 
 	where 
 		idx = [1 .. n]
 
@@ -56,7 +56,7 @@ qEye n =
 		idx  = [1 .. n]
 		mrow = \m -> [ d n m | n <- idx]
 	in
-		QMatrix [mrow m | m <- idx]
+		qMat [mrow m | m <- idx]
 
 qAt :: QMatrix -> Int -> Int -> (Complex Float)
 qAt (QMatrix xs) y x = (posListAt xs) y x

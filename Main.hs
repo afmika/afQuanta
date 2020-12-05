@@ -8,7 +8,7 @@ import QGates
 
 main :: IO ()
 main = 
-	let 
+	let
 		state  = qVec [1 :+ 0, 2, 1 :+ 1, 1]
 		transf = qEye (qVDim state)
 		gate   = QGate transf
