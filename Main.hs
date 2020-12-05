@@ -43,5 +43,5 @@ main =
 	 		putStrLn ("H |0> = " ++ show res_bit);
 	 		putStrLn ("H |0> probs     = " ++ show probs);
 	 		putStrLn ("Observe (H |0>) = " ++ show measured);
-	 		putStrLn ("Observed probs   = " ++ show mes_prob);
+	 		putStrLn ("Observed probs  = " ++ show mes_prob);
 	 	}

@@ -32,7 +32,7 @@ qVMap :: (Complex Float -> Complex Float) -> QVector -> QVector
 qVMap func (QVector xs) = QVector $ map func xs;
 
 qVLength :: QVector -> Float
-qVLength (QVector xs) = realPart $ sum $ map (\a -> (abs a) ^ 2) xs
+qVLength (QVector xs) = sqrt $ realPart $ sum $ map (\a -> (abs a) ^ 2) xs
 
 qIsVUnitary :: QVector -> Bool
 qIsVUnitary vec = areEqual 1.0 (qVLength vec)
@@ -42,7 +42,7 @@ qVNormalize vec =
 	let
 		len  = qVLength vec
 	in 
-		(1 / sqrt len) `vtimes` vec
+		(1 / len) `vtimes` vec
 
 qHasDimPowOf2 :: QVector -> Bool
 qHasDimPowOf2 vec = 

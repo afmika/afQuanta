@@ -28,4 +28,4 @@ qObserve (QBit (QVector xs)) =
 		ridx  = 0 -- @todo should be picked randomly according to the qBit components
 		pick  = \i -> if i /= ridx then 0 else 1
 	in
-		qBit $ qVec [ pick i | i <- index ]  
+		qBit $ qVec [ pick i | i <- index ]

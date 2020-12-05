@@ -41,7 +41,7 @@ data QMatrix = QMatrix [[Complex Float]] deriving (Show, Eq)
 qMat :: [[Complex Float]] -> QMatrix
 qMat xs
 	| isSquare xs = (QMatrix xs) 
-	| otherwise   = error "The given matrix should be squared"
+	| otherwise   = error "The given matrix must be square"
 
 qZero :: Int -> QMatrix
 qZero n = 
@@ -86,6 +86,7 @@ qMapAll func (QMatrix mat) =
 		qMat [
 			[ func ((qAt (QMatrix mat)) y x) y x | x <- index ] | y <- index
 		]
+
 -------------------------------------------------------
 -- I expect you to understand this.... oh future me  --
 -------------------------------------------------------
@@ -109,8 +110,8 @@ a `dot` b
 		| qDim a /= qDim b = error "size a /= size b" 
 		| otherwise = 
 			let
-				sz = qDim a
-				index = [0 .. (sz-1)]
+				sz    = qDim a
+				index = [0 .. sz - 1]
 				pA = qAt a
 				pB = qAt b
 				takeVDot = \rowA colB -> sum [ (pA rowA k) * (pB k colB) | k <- index ]
@@ -122,13 +123,13 @@ a `dot` b
 mtimes :: QMatrix -> QVector -> QVector
 a `mtimes` b
 		| qDim a /= qVDim b = error "operands must be compatible (same row dimension)"
-		| otherwise            =
+		| otherwise         =
 			let
 				sz    = qDim a
 				ma    = qAsList a
 				index = [0 .. sz - 1]
 				prod  = \x y -> x * y
-				a_row   = \r -> ma !! r
-				b_col   = qVAsList b
+				a_row = \r -> ma !! r
+				b_col = qVAsList b
 			in
 				qVec $ map sum [ zipWith prod (a_row r) b_col | r <- index ]
