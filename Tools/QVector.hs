@@ -5,6 +5,7 @@
 
 module QVector where
 import Data.Complex
+
 -- helpers
 areEqual :: Float -> Float -> Bool
 areEqual a b = abs(a - b) <= (1 / 10^6)
