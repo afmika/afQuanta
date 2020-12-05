@@ -14,8 +14,8 @@ main =
 		gate   = qGate transf -- makes a new gate using the transf matrix
 		
 		-- builds a qBit from a normalized 2^N vector
-		comp   = map fromIntegral $ take 8 [1..]
-		psi    = qBit $ qVNormalize $ qVec $ comp
+		comp   = map fromInteger $ take 4 (repeat 1)
+		psi    = qBit $ qVNormalize $ qVec comp
 		observed_psi  = qObserve psi
 		observed_prob = qProbabilities observed_psi
 
@@ -32,9 +32,8 @@ main =
  	in
  		do {
  			putStrLn("-----------");
-	 		putStrLn (show psi);
-	 		putStrLn ("N = " ++ (show $ qBitDim psi));
-	 		putStrLn ("Observed = " ++ show (observed_psi));
+	 		putStrLn ("psi = " ++ show psi);
+	 		putStrLn ("Observed psi   = " ++ show (observed_psi));
 	 		putStrLn ("Observed probs = " ++ show (observed_prob));
 
 	 		putStrLn ("\nHadamard Gate");
@@ -43,9 +42,9 @@ main =
 	 		putStrLn ("A.B");
 	 		qShow prod;
 
-	 		putStrLn ("Mat . Vec = " ++ show result);
+	 		putStrLn ("Mat . Vec = " ++ show result ++ "\n");
 	 		putStrLn ("H |0> = " ++ show res_bit);
 	 		putStrLn ("H |0> probs     = " ++ show probs);
-	 		putStrLn ("Observe (H |0>) = " ++ show measured);
+	 		putStrLn ("Observed H |0>  = " ++ show measured);
 	 		putStrLn ("Observed probs  = " ++ show mes_prob);
 	 	}
