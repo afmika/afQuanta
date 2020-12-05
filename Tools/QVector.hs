@@ -1,8 +1,24 @@
 module QVector where
 import Data.Complex
+-- helpers
+areEqual :: Float -> Float -> Bool
+areEqual a b = abs(a - b) <= (1 / 10^6)
 
+-- defs
 data QVector = QVector [Complex Float] deriving (Show, Eq)
+-- usual ops
+vplus :: QVector -> QVector -> QVector
+(QVector u) `vplus` (QVector v) 
+	| length u /= length v = error "operands must have the same dimension"
+	| otherwise  = QVector [ (u !! i) + (v !! i) | i <- [0 .. length u - 1]]
 
+vdot :: QVector -> QVector -> (Complex Float)
+(QVector u) `vdot` (QVector v) = sum [ (u !! i) * (v !! i) | i <- [0 .. length u - 1] ]
+
+vtimes :: Float -> QVector -> QVector
+n `vtimes` (QVector v) = QVector [ (n :+ 0) * (v !! i) | i <- [0 .. length v - 1] ]
+
+-- others
 qVec :: [Complex Float] -> QVector
 qVec list = QVector list
 
@@ -15,13 +31,21 @@ qVMap func (QVector xs) = QVector $ map func xs;
 qVLength :: QVector -> Float
 qVLength (QVector xs) = realPart $ sum $ map (\a -> (abs a) ^ 2) xs
 
-isUnitary :: QVector -> Bool
-isUnitary vec = abs(1.0 - qVLength vec) <= (1 / (10^6))
+qIsVUnitary :: QVector -> Bool
+qIsVUnitary vec = areEqual 1.0 (qVLength vec)
 
-vplus :: QVector -> QVector -> QVector
-(QVector u) `vplus` (QVector v) 
-	| length u /= length v = error "operands must have the same dimension"
-	| otherwise  = QVector [ (u !! i) + (v !! i) | i <- [0 .. length u - 1]]
+qVNormalize :: QVector -> QVector
+qVNormalize vec =
+	let
+		len  = qVLength vec
+	in 
+		(1 / sqrt len) `vtimes` vec
 
-vdot :: QVector -> QVector -> (Complex Float)
-(QVector u) `vdot` (QVector v) = sum [ (u !! i) * (v !! i) | i <- [0 .. length u - 1] ]
+qHasDimPowOf2 :: QVector -> Bool
+qHasDimPowOf2 vec = 
+	let
+		dim    = fromIntegral (qVDim vec)
+		n      = log dim / log 2
+		floorn = fromIntegral (floor n)
+	in
+		areEqual n floorn

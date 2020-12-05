@@ -7,13 +7,13 @@ import QBit
 import QGates
 
 main :: IO ()
-
 main = 
 	let 
 		state  = qVec [1, 2, 1 :+ 1, 1]
 		transf = qEye (qVDim state)
 		gate   = QGate transf
-		psi    = qBit $ QVector [1 / sqrt 2, 1 / sqrt 2]
+		comp   = map fromIntegral $ take 4 [1..]
+		psi    = qBit $ qVNormalize $ qVec $ comp
  	in
  		do {
 	 		putStrLn (show psi);
