@@ -106,18 +106,16 @@ n `times` mat = qMap (\v -> (n :+ 0) * v) mat
 
 -- Ex qMat [[1,2,3],[3,4,5],[3,1,1]] `dot` qMat [[1,0,2],[1,-1,3],[5,3,8]]
 dot :: QMatrix -> QMatrix -> QMatrix
-(QMatrix a) `dot` (QMatrix b)
-	| qDim (QMatrix a) /= qDim (QMatrix b) = error "size a /= size b" 
-	| otherwise = 
-		let
-			mA = (QMatrix a)
-			mB = (QMatrix b)
-			sz = qDim mA
-			index = [0 .. (sz-1)]
-			pA = qAt mA
-			pB = qAt mB
-			takeVDot = \rowA colB -> sum [ (pA rowA k) * (pB k colB) | k <- index ]
-		in
-			QMatrix [ 
-				[ takeVDot y x | x <- index ] | y <- index 
-			]
+a `dot` b
+		| qDim a /= qDim b = error "size a /= size b" 
+		| otherwise = 
+			let
+				sz = qDim a
+				index = [0 .. (sz-1)]
+				pA = qAt a
+				pB = qAt b
+				takeVDot = \rowA colB -> sum [ (pA rowA k) * (pB k colB) | k <- index ]
+			in
+				QMatrix [ 
+					[ takeVDot y x | x <- index ] | y <- index 
+				]

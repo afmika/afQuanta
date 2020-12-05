@@ -21,6 +21,6 @@ qGateShow (QGate qmat) =
 	}
 
 hadamard2 = qGate ((1 / sqrt 2) `times` QMatrix [
-			[1, 1],
+			[1,  1],
 			[1, -1]
 		])
