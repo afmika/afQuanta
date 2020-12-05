@@ -86,8 +86,9 @@ qMapAll func (QMatrix mat) =
 		qMat [
 			[ func ((qAt (QMatrix mat)) y x) y x | x <- index ] | y <- index
 		]
-
-
+-------------------------------------------------------
+-- I expect you to understand this.... oh future me  --
+-------------------------------------------------------
 qShow (QMatrix xs) =
 	let
 		n     = qDim (QMatrix xs)
@@ -100,11 +101,9 @@ qShow (QMatrix xs) =
 			putStrLn $ unlines $ [ joinCols (mrow r) | r <- index]
 		}
 
-
 times :: Float -> QMatrix -> QMatrix
 n `times` mat = qMap (\v -> (n :+ 0) * v) mat
 
--- Ex qMat [[1,2,3],[3,4,5],[3,1,1]] `dot` qMat [[1,0,2],[1,-1,3],[5,3,8]]
 dot :: QMatrix -> QMatrix -> QMatrix
 a `dot` b
 		| qDim a /= qDim b = error "size a /= size b" 
@@ -119,3 +118,17 @@ a `dot` b
 				qMat [ 
 					[ takeVDot y x | x <- index ] | y <- index 
 				]
+
+mtimes :: QMatrix -> QVector -> QVector
+a `mtimes` b
+		| qDim a /= qVDim b = error "operands must be compatible (same row dimension)"
+		| otherwise            =
+			let
+				sz    = qDim a
+				ma    = qAsList a
+				index = [0 .. sz - 1]
+				prod  = \x y -> x * y
+				a_row   = \r -> ma !! r
+				b_col   = qVAsList b
+			in
+				qVec $ map sum [ zipWith prod (a_row r) b_col | r <- index ]

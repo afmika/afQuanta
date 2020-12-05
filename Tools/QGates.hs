@@ -1,7 +1,9 @@
 module QGates where
 
 import Data.Complex
+import QVector
 import QMatrix
+import QBit
 
 data QGate = QGate (QMatrix) deriving (Show, Eq)
 
@@ -13,6 +15,14 @@ qGate mat = QGate mat
 
 qGateDim :: QGate -> Int
 qGateDim (QGate mat) = qDim mat
+
+apply :: QGate -> QBit -> QBit
+gate `apply` bit =
+	let
+		mat = qGateMatrix gate
+		vec = qBitVec bit
+	in
+		qBit (mat `mtimes` vec)
 
 qGateShow (QGate qmat) = 
 	do {

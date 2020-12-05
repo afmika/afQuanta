@@ -9,6 +9,9 @@ data QVector = QVector [Complex Float] deriving (Show, Eq)
 qVec :: [Complex Float] -> QVector
 qVec list = QVector list
 
+qVAsList :: QVector -> [Complex Float]
+qVAsList (QVector list) = list
+
 -- usual ops
 vplus :: QVector -> QVector -> QVector
 (QVector u) `vplus` (QVector v) 
