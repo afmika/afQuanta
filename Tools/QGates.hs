@@ -35,6 +35,8 @@ qGateShow (QGate qmat) =
 		qShow qmat;
 	}
 
+
+-- Gate defs
 -- Hadamard gate operates on a single qBit
 hadamard2 = qGate ((1 / sqrt 2) `times` qMat [
 			[1,  1],
