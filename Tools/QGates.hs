@@ -35,7 +35,45 @@ qGateShow (QGate qmat) =
 		qShow qmat;
 	}
 
+-- Hadamard gate operates on a single qBit
 hadamard2 = qGate ((1 / sqrt 2) `times` qMat [
 			[1,  1],
 			[1, -1]
 		])
+
+-- Pauli-X (= NOT gate) operates on a single qBit
+pauli_x = qGate $ qMat [
+			[0,  1],
+			[1,  0]
+		]
+
+-- Pauli-Y operates on a single qBit
+pauli_y = qGate $ qMat [
+			[0,  (0 :+ 1)],
+			[(0 :+ 1),  0]
+		]
+-- Pauli-Z operates on a single qBit
+pauli_z = qGate $ qMat [
+			[1,  0],
+			[0,  -1]
+		]
+
+-- Swap (S) operates on 2 qBits
+swap_s = qGate $ qMat [
+			[1, 0, 0, 0],
+			[0, 0, 1, 0],
+			[0, 1, 0, 0],
+			[0, 0, 0, 1]
+		]
+
+-- Toffoli (CCNOT) operates on 3 qBits
+toffoli = qGate $ qMat [
+			[1, 0, 0, 0, 0, 0, 0, 0],
+			[0, 1, 0, 0, 0, 0, 0, 0],
+			[0, 0, 1, 0, 0, 0, 0, 0],
+			[0, 0, 0, 1, 0, 0, 0, 0],
+			[0, 0, 0, 0, 1, 0, 0, 0],
+			[0, 0, 0, 0, 0, 1, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 1],
+			[0, 0, 0, 0, 0, 0, 1, 0]
+		]
