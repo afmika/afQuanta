@@ -73,7 +73,7 @@ qMap func (QMatrix mat) =
 	let
 		index = [0 .. (length mat - 1)]
 	in
-		QMatrix [
+		qMat [
 			map func $ (mat !! y) | y <- index
 		]
 
@@ -83,7 +83,7 @@ qMapAll func (QMatrix mat) =
 	let
 		index = [0 .. (length mat - 1)]
 	in
-		QMatrix [
+		qMat [
 			[ func ((qAt (QMatrix mat)) y x) y x | x <- index ] | y <- index
 		]
 
@@ -116,6 +116,6 @@ a `dot` b
 				pB = qAt b
 				takeVDot = \rowA colB -> sum [ (pA rowA k) * (pB k colB) | k <- index ]
 			in
-				QMatrix [ 
+				qMat [ 
 					[ takeVDot y x | x <- index ] | y <- index 
 				]

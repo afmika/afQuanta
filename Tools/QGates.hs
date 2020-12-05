@@ -20,7 +20,7 @@ qGateShow (QGate qmat) =
 		qShow qmat;
 	}
 
-hadamard2 = qGate ((1 / sqrt 2) `times` QMatrix [
+hadamard2 = qGate ((1 / sqrt 2) `times` qMat [
 			[1,  1],
 			[1, -1]
 		])
