@@ -9,7 +9,7 @@ import Data.Complex
 import QVector
 import QMatrix
 import QBit
-import QGates
+import QGate
 
 main :: IO ()
 main = 

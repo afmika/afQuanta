@@ -3,7 +3,7 @@
 -- email  : afmichael73@gmail.com
 ----------------------------------------
 
-module QGates where
+module QGate where
 
 import Data.Complex
 import QVector
