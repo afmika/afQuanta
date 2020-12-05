@@ -20,14 +20,6 @@ qCurrentTime = do
 			psec  = denominator dtime
 		return (sec, psec)
 
-qSec = do 
-	(sec, psec) <- qCurrentTime
-	return sec
-
-qPSec = do 
-	(sec, psec) <- qCurrentTime
-	return psec
-
 -- random generator
 
 -- Xnext = (aXn + c) mod m

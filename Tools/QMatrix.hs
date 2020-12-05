@@ -39,9 +39,8 @@ isSquare xs =
 posListAt :: [[(Complex Float)]] -> Int -> Int -> (Complex Float)
 posListAt xs y x = (xs !! y) !! x
 
--- functions
+-- defs
 data QMatrix = QMatrix [[Complex Float]] deriving (Show, Eq)
-
 
 qMat :: [[Complex Float]] -> QMatrix
 qMat xs
