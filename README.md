@@ -3,7 +3,7 @@ afQuanta is a basic quantum computing library written in Haskell
 
 ## QBit / QVector
 * You can create a QBit from a QVector, a special kind of vector where all components are complex numbers, the input vector should be unitary.
-* A qubit only takes a 2^N vector as an input
+* A qubit only takes a 2^N vector as input
 
 ```Haskell
 -- |my_qubit> = i|1>
@@ -17,7 +17,7 @@ my_qubit' = qBit my_vec
 ```
 
 ## QGate / QMatrix
-* You can create your own quantum gate or use predefined ones
+* You can build your own quantum gate or use predefined ones
 * A gate is built using a QMatrix : a 2^N x 2^N matrix where all components are complex numbers
 * A gate should be unitary : it preserves unitary vectors
 
