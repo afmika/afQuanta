@@ -35,7 +35,7 @@ qVDim :: QVector -> Int
 qVDim (QVector u) = length u
 
 qVMap :: (Complex Float -> Complex Float) -> QVector -> QVector
-qVMap func (QVector xs) = QVector $ map func xs;
+qVMap func (QVector xs) = qVec $ map func xs;
 
 qVLength :: QVector -> Float
 qVLength (QVector xs) = sqrt $ realPart $ sum $ map (\a -> (abs a) ^ 2) xs
