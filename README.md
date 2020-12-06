@@ -35,6 +35,12 @@ new_state  = my_gate `apply` old_state
 -- You can even compose multiple Gates
 new_state' = (my_gate `gdot` hadamard2) `apply` new_state
 ```
+All quantum gates are represented as hermitian and unitary, for energy preservation
+```Haskell
+-- we can extract the QMatrix data inside a QGate by using the qGateMatrix function
+qIsHermitian $ qGateMatrix some_gate -- evaluates to True
+qIsUnitary $ qGateMatrix some_gate -- evaluates to True
+```
 ## Predefined gates
 * hadamard2
 * pauli_x
@@ -70,6 +76,19 @@ obsr  = qObserve reg -- observing the state
 
 a = qMat [[1, 1], [2,2]]
 b = qMat [[3, 3], [4,4]]
+
+is_zero  = qIsZero $ qMat [[0, 0], [0,0]] -- evaluates to True
+
+h_matrix = qGateMatrix hadamard2 -- extracts the QMatrix inside the hadamard2 gate
+temp     = qIsHermitian h_matrix -- evaluates to True
+temp'    = qIsUnitary h_matrix -- evaluates to True
+temp''   = qIsZero h_matrix -- evaluates to False
+ 
+-- Conjugate Transpose/adjoint matrix/ Matrix^dagger
+conj_trans = qConjugateTranspose a
+
+-- Transpose / Matrix^T
+a_transp = qTranspose a
 
 -- Product between two matrices
 matr_prod = a `dot` b

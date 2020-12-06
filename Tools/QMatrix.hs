@@ -186,7 +186,7 @@ qIsUnitary mt =
 		m_dagger = qConjugateTranspose mt
 		dotprod  = m_dagger `dot` mt
 		-- M^dagger M = I
-		--  M^dagger M - I = 0 
+		-- M^dagger M - I = 0 
 		fun      = \a b -> abs (a - b)
 		diff     = qMapDouble fun dotprod id
 	in
