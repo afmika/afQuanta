@@ -50,11 +50,11 @@ gdot :: QGate -> QGate -> QGate
 qGateGenerator :: Float -> Float -> Float -> QGate
 qGateGenerator teta phi lambda = 
 		let
-			p = (phi :+ 0)
-			l = (lambda :+ 0)
+			p = phi :+ 0
+			l = lambda :+ 0
 			i = 0 :+ 1
-			sint_2 = (sin (teta / 2) :+ 0)
-			cost_2 = (cos (teta / 2) :+ 0)
+			sint_2 = sin (teta / 2) :+ 0
+			cost_2 = cos (teta / 2) :+ 0
 		in
 			qGate $ qMat [
 				[  cost_2             ,     -exp(i*l) * sint_2 ],

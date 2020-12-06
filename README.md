@@ -2,8 +2,8 @@
 afQuanta is a basic quantum computing library written in Haskell
 
 ## QBit / QVector
-* You can create a QBit from a QVector, a special kind of vector where all components are complex numbers, the input vector should be unitary.
-* A qubit only takes a 2^N vector as input
+* You can create a `QBit` from a `QVector`, a special kind of vector where all components are complex numbers, the input vector should be unitary.
+* A qubit only takes a `2^N` vector as input
 
 ```Haskell
 -- |my_qubit> = i|1>
@@ -18,7 +18,7 @@ my_qubit' = qBit my_vec
 
 ## QGate / QMatrix
 * You can build your own quantum gate or use predefined ones
-* A gate is built using a QMatrix : a 2^N x 2^N matrix where all components are complex numbers
+* A gate is built using a QMatrix : a `2^N x 2^N` matrix where all components are complex numbers
 * A gate should be unitary : it preserves unitary vectors
 
 ```Haskell
@@ -35,12 +35,19 @@ new_state  = my_gate `apply` old_state
 -- You can even compose multiple Gates
 new_state' = (my_gate `gdot` hadamard2) `apply` new_state
 ```
-All quantum gates are represented as hermitian and unitary, for energy preservation
+All quantum gates are represented as *Hermitian* and *unitary* for energy preservation
 ```Haskell
 -- we can extract the QMatrix data inside a QGate by using the qGateMatrix function
 qIsHermitian $ qGateMatrix some_gate -- evaluates to True
 qIsUnitary $ qGateMatrix some_gate -- evaluates to True
 ```
+
+You can use the `U3` gate generator by using the `qGateGenerator teta phi lambda` function
+```Haskell
+-- For example, the hadamard gate can be obtained with ...
+my_hadamard2 = qGateGenerator (pi/2) 0 pi
+```
+
 ## Predefined gates
 * hadamard2
 * pauli_x
@@ -48,6 +55,7 @@ qIsUnitary $ qGateMatrix some_gate -- evaluates to True
 * pauli_z
 * swap_s
 * toffoli
+* ...etc
 
 ## Measure
 In this example, we measure a qubit based on the probability of having each state

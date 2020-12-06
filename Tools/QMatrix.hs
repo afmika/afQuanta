@@ -176,7 +176,20 @@ qConjugateTranspose mt = qMap conjugate $ qTranspose mt
 
 -- Hermitian matrix --> M^dagger = M
 qIsHermitian :: QMatrix -> Bool
-qIsHermitian mt = mt == qConjugateTranspose mt
+qIsHermitian mt = qIsZero $ mt `mdelta` qConjugateTranspose mt
+
+-- matA - matB
+mdiff :: QMatrix -> QMatrix -> QMatrix
+a `mdiff` b = qMapDouble (\x y -> x - y) a b
+
+-- matA + matB
+mplus :: QMatrix -> QMatrix -> QMatrix
+a `mplus` b = qMapDouble (\x y -> x + y) a b
+
+-- matA + matB
+mdelta :: QMatrix -> QMatrix -> QMatrix
+a `mdelta` b = qMapDouble (\x y -> abs(x - y)) a b
+
 
 -- Unitary matrix --> M^dagger M = I <=> M^dagger = M^-1
 qIsUnitary :: QMatrix -> Bool
@@ -184,10 +197,7 @@ qIsUnitary mt =
 	let
 		id       = qEye (qDim mt)
 		m_dagger = qConjugateTranspose mt
-		dotprod  = m_dagger `dot` mt
-		-- M^dagger M = I
-		-- M^dagger M - I = 0 
-		fun      = \a b -> abs (a - b)
-		diff     = qMapDouble fun dotprod id
 	in
-		qIsZero diff
+		--  M^dagger M = I
+		-- (M^dagger M) - I = 0 
+		qIsZero $ (m_dagger `dot` mt) `mdelta` id
