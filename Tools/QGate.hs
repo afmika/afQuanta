@@ -39,6 +39,9 @@ qGateShow (QGate qmat) =
 		qShow qmat;
 	}
 
+-- Gate composition
+gdot :: QGate -> QGate -> QGate
+(QGate a) `gdot` (QGate b) = qGate $ a `dot` b
 
 -- Gate defs
 -- Hadamard gate operates on a single qBit

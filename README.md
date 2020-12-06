@@ -28,9 +28,12 @@ my_gate = qGate $ qMatrix [
 		[0,-1]
 	]
 -- Applying a gate to a given state
-new_state = my_gate `apply` old_state
+new_state  = my_gate `apply` old_state
 	where 
 		old_state = qBit $ qVec [1, 0]
+
+-- You can even compose multiple Gates
+new_state' = (my_gate `gdot` hadamard2) `apply` new_state
 ```
 ## Predefined gates
 * hadamard2
@@ -76,6 +79,9 @@ floa_prod = 3 `times` a
 
 -- Product between a matrix and a vector
 matv_prod = a `mtimes` vec
+
+-- Gate composition
+new_gate  = (qGate a) `gdot` (qGate b)
 
 -- Tensor product between two matrices
 tens_prod = a `kprod` b
