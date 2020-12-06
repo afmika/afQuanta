@@ -12,14 +12,14 @@ import Data.Complex
 import Data.List
 
 -- helpers
-roundDec :: Int -> Float -> Float
+roundDec :: Int -> Double -> Double
 roundDec d n = up / pp
 	where
 		pp   = 10^d
 		nup  = n * pp
 		up   = fromInteger (round nup)
 
-formatComplex :: Complex Float -> String
+formatComplex :: Complex Double -> String
 formatComplex c = 
 	let
 		a  = roundDec 2 (realPart c)
@@ -37,13 +37,13 @@ isSquare xs =
 		(sum to_check) == 0
 
 
-posListAt :: [[(Complex Float)]] -> Int -> Int -> (Complex Float)
+posListAt :: [[(Complex Double)]] -> Int -> Int -> (Complex Double)
 posListAt xs y x = (xs !! y) !! x
 
 -- defs
-data QMatrix = QMatrix [[Complex Float]] deriving (Show, Eq)
+data QMatrix = QMatrix [[Complex Double]] deriving (Show, Eq)
 
-qMat :: [[Complex Float]] -> QMatrix
+qMat :: [[Complex Double]] -> QMatrix
 qMat xs
 	| isSquare xs = (QMatrix xs) 
 	| otherwise   = error "The given matrix must be square"
@@ -63,13 +63,13 @@ qEye n =
 	in
 		qMat [mrow m | m <- idx]
 
-qAt :: QMatrix -> Int -> Int -> (Complex Float)
+qAt :: QMatrix -> Int -> Int -> (Complex Double)
 qAt (QMatrix xs) y x = (posListAt xs) y x
 
 qDim :: QMatrix -> Int
 qDim (QMatrix xs) = length xs
 
-qAsList :: QMatrix -> [[Complex Float]]
+qAsList :: QMatrix -> [[Complex Double]]
 qAsList (QMatrix xs) = xs
 
 kprod :: QMatrix -> QMatrix -> QMatrix
@@ -77,7 +77,7 @@ kprod :: QMatrix -> QMatrix -> QMatrix
 
 
 -- ex qMap (\value -> ... ) $ yourMatrix
-qMap :: (Complex Float -> Complex Float) -> QMatrix -> QMatrix
+qMap :: (Complex Double -> Complex Double) -> QMatrix -> QMatrix
 qMap func (QMatrix mat) = 
 	let
 		index = [0 .. (length mat - 1)]
@@ -86,7 +86,7 @@ qMap func (QMatrix mat) =
 			map func $ (mat !! y) | y <- index
 		]
 
-qMapDouble :: (Complex Float -> Complex Float -> Complex Float) -> QMatrix -> QMatrix -> QMatrix
+qMapDouble :: (Complex Double -> Complex Double -> Complex Double) -> QMatrix -> QMatrix -> QMatrix
 qMapDouble func a b
 	| qDim a /= qDim b = error "operands must be compatible"
 	| otherwise        =
@@ -100,7 +100,7 @@ qMapDouble func a b
 			]
 
 -- ex qMapAll (\value row col -> ... ) $ yourMatrix
-qMapAll :: (Complex Float -> Int -> Int -> Complex Float) -> QMatrix -> QMatrix
+qMapAll :: (Complex Double -> Int -> Int -> Complex Double) -> QMatrix -> QMatrix
 qMapAll func (QMatrix mat) = 
 	let
 		index = [0 .. (length mat - 1)]
@@ -124,10 +124,10 @@ qShow (QMatrix xs) =
 			putStrLn $ unlines $ [ joinCols (mrow r) | r <- index]
 		}
 
-times :: Float -> QMatrix -> QMatrix
+times :: Double -> QMatrix -> QMatrix
 n `times` mat = qMap (\v -> (n :+ 0) * v) mat
 
-ctimes :: (Complex Float) -> QMatrix -> QMatrix
+ctimes :: (Complex Double) -> QMatrix -> QMatrix
 n `ctimes` mat = qMap (\v -> n*v) mat
 
 dot :: QMatrix -> QMatrix -> QMatrix
@@ -163,9 +163,8 @@ qIsZero :: QMatrix -> Bool
 qIsZero (QMatrix m) = 
 		let
 			t   = sum [sum (m !! i) | i <- [0 .. length m - 1] ]
-			ups = 1 / 10^6 
 		in 
-			realPart t <= ups && imagPart t <= ups
+			realPart t <= v_upsilon && imagPart t <= v_upsilon
 
 qTranspose :: QMatrix -> QMatrix
 qTranspose (QMatrix xs) = qMat $ transpose xs
@@ -186,7 +185,7 @@ a `mdiff` b = qMapDouble (\x y -> x - y) a b
 mplus :: QMatrix -> QMatrix -> QMatrix
 a `mplus` b = qMapDouble (\x y -> x + y) a b
 
--- matA + matB
+-- abs (matA - matB)
 mdelta :: QMatrix -> QMatrix -> QMatrix
 a `mdelta` b = qMapDouble (\x y -> abs(x - y)) a b
 

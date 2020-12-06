@@ -47,7 +47,7 @@ gdot :: QGate -> QGate -> QGate
 
 
 -- U3 generator (ex hadamard2 = U3(π/2,0,π) )
-qGateGenerator :: Float -> Float -> Float -> QGate
+qGateGenerator :: Double -> Double -> Double -> QGate
 qGateGenerator teta phi lambda = 
 		let
 			p = phi :+ 0

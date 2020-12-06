@@ -25,7 +25,7 @@ qBitVec (QBit v) = v
 qBitDim :: QBit -> Int
 qBitDim qb = qVDim $ qBitVec qb
 
-qProbabilities :: QBit -> [Float]
+qProbabilities :: QBit -> [Double]
 qProbabilities (QBit (QVector xs)) = [ realPart ((abs m)^2) | m <- xs]
 
 -- checks if all probabilities are equal (the index should be uniformly picked)

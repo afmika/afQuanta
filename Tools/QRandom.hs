@@ -49,13 +49,13 @@ qIORandInf limit = do
 	out <- qIORand
 	return (out `mod` limit)
 
-qIORandFloat :: IO (Float)
+qIORandFloat :: IO (Double)
 qIORandFloat = do
 	out <- qIORandInf bigint
 	return (fromIntegral out / fromIntegral bigint)
 
 
-qRandPickIndex :: [Float] -> Int -> Bool -> IO Int
+qRandPickIndex :: [Double] -> Int -> Bool -> IO Int
 qRandPickIndex xs i True = do return i
 qRandPickIndex xs i done = do
 	rand  <- qIORandFloat
@@ -64,5 +64,5 @@ qRandPickIndex xs i done = do
 	else 
 		qRandPickIndex xs ((i + 1) `mod` (length xs)) False
 
-qRandPickIndexUniform :: [Float] -> IO Int
+qRandPickIndexUniform :: [Double] -> IO Int
 qRandPickIndexUniform xs = do qIORandInf (length xs)

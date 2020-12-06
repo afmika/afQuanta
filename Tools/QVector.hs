@@ -4,18 +4,20 @@
 ----------------------------------------
 
 module QVector where
+
+import QMath
 import Data.Complex
 
 -- helpers
-areEqual :: Float -> Float -> Bool
-areEqual a b = abs(a - b) <= (1 / 10^6)
+areEqual :: Double -> Double -> Bool
+areEqual a b = abs(a - b) <= v_upsilon
 
 -- defs
-data QVector = QVector [Complex Float] deriving (Show, Eq)
-qVec :: [Complex Float] -> QVector
+data QVector = QVector [Complex Double] deriving (Show, Eq)
+qVec :: [Complex Double] -> QVector
 qVec list = QVector list
 
-qVAsList :: QVector -> [Complex Float]
+qVAsList :: QVector -> [Complex Double]
 qVAsList (QVector list) = list
 
 -- usual ops
@@ -24,20 +26,20 @@ vplus :: QVector -> QVector -> QVector
 	| length u /= length v = error "operands must have the same dimension"
 	| otherwise  = qVec [ (u !! i) + (v !! i) | i <- [0 .. length u - 1]]
 
-vdot :: QVector -> QVector -> (Complex Float)
+vdot :: QVector -> QVector -> (Complex Double)
 (QVector u) `vdot` (QVector v) = sum [ (u !! i) * (v !! i) | i <- [0 .. length u - 1] ]
 
-vtimes :: Float -> QVector -> QVector
+vtimes :: Double -> QVector -> QVector
 n `vtimes` (QVector v) = qVec [ (n :+ 0) * (v !! i) | i <- [0 .. length v - 1] ]
 
 -- others
 qVDim :: QVector -> Int
 qVDim (QVector u) = length u
 
-qVMap :: (Complex Float -> Complex Float) -> QVector -> QVector
+qVMap :: (Complex Double -> Complex Double) -> QVector -> QVector
 qVMap func (QVector xs) = qVec $ map func xs;
 
-qVLength :: QVector -> Float
+qVLength :: QVector -> Double
 qVLength (QVector xs) = sqrt $ realPart $ sum $ map (\a -> (abs a) ^ 2) xs
 
 qIsVUnitary :: QVector -> Bool
