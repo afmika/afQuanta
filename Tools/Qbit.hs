@@ -5,10 +5,12 @@
 
 module QBit where
 
+import QMath
 import QVector
 import QRandom
 
 import Data.Complex
+import Data.List
 import System.IO.Unsafe ( unsafePerformIO )
 
 data QBit = QBit (QVector) deriving (Show, Eq)
@@ -37,6 +39,20 @@ qEqualProbabilities qb =
 		func  = \a b -> if areEqual a b then 1 else 0 
 	in
 		(length probs) == (sum [ func first p | p <- probs])
+
+-- tensor product between two qubits
+-- We can use this operator to combine two qubits
+-- Assuming the two operands are not entangled
+combine :: QBit -> QBit -> QBit
+(QBit (QVector a)) `combine` (QBit (QVector b)) = 
+	let
+		ta = transpose [a]
+		tb = transpose [b]
+		kr = kroneker_prod ta tb
+	in
+		qBit $ qVec $ map (\i -> i !! 0 ) kr
+
+
 
 -- IO Operations (actions)
 

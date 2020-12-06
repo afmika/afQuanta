@@ -16,6 +16,17 @@ my_qubit' = qBit my_vec
 		my_vec = qVNormalize $ qVec unit
 ```
 
+You can also combine two qubit registers into a single one
+```Haskell
+-- |0>
+psi = qBit $ qVec [1, 0]
+-- |1>
+phi = qBit $ qVec [0, 1]
+
+-- |0> (X) |1> = |01>
+res = psi `combine` phi -- combined state
+```
+
 ## QGate / QMatrix
 * You can build your own quantum gate or use predefined ones
 * A gate is built using a QMatrix : a `2^N x 2^N` matrix where all components are complex numbers
@@ -118,6 +129,10 @@ tens_prod = a `kprod` b
 
 -- Tensor product between two quantum gates
 gt_prod   = (qGate a) `tprod` (qGate b)
+
+-- Tensor product between two quBits
+-- |0> (X) |1> = |01>
+combined  = (qBit $ qVec [1, 0]) `combine` (qBit $ qVec [0, 1])
 ```
 ## Program example
 ```Haskell
@@ -131,17 +146,22 @@ import QGate
 main :: IO ()
 main = 
 	let
-		-- Initializing the register state
-		-- |psi> = 1*|0> + 0*|1>
-		psi = qBit $ qVec [1, 0]
+		-- Initializing
+		psi   = qBit $ qVec [1, 0] -- first qubit register
+		phi   = qBit $ qVec [0, 1] -- second qubit register
+
+		-- |S> = |psi> (X) |phi>
+		state = psi `combine` phi
+
+		-- adapting the hadamard gate for N = 4
+		h4 = hadamard2 `tprod` hadamard2
 
 		-- Applying the Hadamard gate
-		-- H |psi> = 1/sqrt 2  (|0> + |1>)
-		result   = hadamard2 `apply` psi
+		result   = h4 `apply` state
 		measured = qObserve result 
 	in
 		do
-			putStrLn ("|psi> = " ++ show psi)
-			putStrLn ("H |psi> = " ++ show result)
-			putStrLn ("mes H|psi> : \n" ++ show measured)
+			putStrLn $ "|S> = " ++ show state
+			putStrLn $ "H |S> = " ++ show result
+			putStrLn $ "mes H|S> : \n" ++ show measured
 ```
