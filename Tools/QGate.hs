@@ -29,6 +29,10 @@ gate `apply` bit =
 	in
 		qBit (mat `mtimes` vec)
 
+-- tensor product
+tprod :: QGate -> QGate -> QGate
+(QGate a) `tprod` (QGate b) = qGate $ a `kprod` b
+
 qGateShow (QGate qmat) = 
 	do {
 		putStrLn ("Gate dim = " ++ (show $ qGateDim (QGate qmat)));

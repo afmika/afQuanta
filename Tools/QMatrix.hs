@@ -6,6 +6,7 @@
 module QMatrix where
 
 import QVector
+import QMath
 
 import Data.Complex
 import Data.List
@@ -70,6 +71,10 @@ qDim (QMatrix xs) = length xs
 
 qAsList :: QMatrix -> [[Complex Float]]
 qAsList (QMatrix xs) = xs
+
+kprod :: QMatrix -> QMatrix -> QMatrix
+(QMatrix a) `kprod` (QMatrix b) = qMat $ kroneker_prod a b
+
 
 -- ex qMap (\value -> ... ) $ yourMatrix
 qMap :: (Complex Float -> Complex Float) -> QMatrix -> QMatrix
