@@ -45,6 +45,22 @@ qGateShow (QGate qmat) =
 gdot :: QGate -> QGate -> QGate
 (QGate a) `gdot` (QGate b) = qGate $ a `dot` b
 
+
+-- U3 generator (ex hadamard2 = U3(π/2,0,π) )
+qGateGenerator :: Float -> Float -> Float -> QGate
+qGateGenerator teta phi lambda = 
+		let
+			p = (phi :+ 0)
+			l = (lambda :+ 0)
+			i = 0 :+ 1
+			sint_2 = (sin (teta / 2) :+ 0)
+			cost_2 = (cos (teta / 2) :+ 0)
+		in
+			qGate $ qMat [
+				[  cost_2             ,     -exp(i*l) * sint_2 ],
+				[  exp(i*p) * sint_2  , exp(i*(l+p)) * cost_2 ]
+			]
+
 -- Gate defs
 -- Hadamard gate operates on a single qBit
 hadamard2 = qGate ((1 / sqrt 2) `times` qMat [
