@@ -39,17 +39,6 @@ qEqualProbabilities qb =
 		(length probs) == (sum [ func first p | p <- probs])
 
 -- IO Operations (actions)
-qRandPickIndex :: [Float] -> Int -> Bool -> IO Int
-qRandPickIndex xs i True = do return i
-qRandPickIndex xs i done = do
-	rand  <- qIORandFloat
-	if rand <= (xs !! i) then 
-		qRandPickIndex xs i True
-	else 
-		qRandPickIndex xs ((i + 1) `mod` (length xs)) False
-
-qRandPickIndexUniform :: [Float] -> IO Int
-qRandPickIndexUniform xs = do qIORandInf (length xs)
 
 qIOObserve :: QBit -> IO QBit
 qIOObserve (QBit (QVector xs)) = do
