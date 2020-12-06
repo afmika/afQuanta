@@ -26,7 +26,7 @@ formatComplex c =
 		b  = roundDec 2 (imagPart c)
 		sg = if b < 0 then " - " else " + "
 	in
-		(show a) ++ sg ++ "i" ++ (show b)
+		(show a) ++ sg ++ "i" ++ (show $ abs b)
 
 isSquare xs = 
 	let
@@ -85,6 +85,19 @@ qMap func (QMatrix mat) =
 		qMat [
 			map func $ (mat !! y) | y <- index
 		]
+
+qMapDouble :: (Complex Float -> Complex Float -> Complex Float) -> QMatrix -> QMatrix -> QMatrix
+qMapDouble func a b
+	| qDim a /= qDim b = error "operands must be compatible"
+	| otherwise        =
+		let
+			index = [0 .. qDim a - 1]
+			pA    = qAt a
+			pB    = qAt b
+		in
+			qMat [
+				[ func (pA y x) (pB y x) | x <- index] | y <- index
+			]
 
 -- ex qMapAll (\value row col -> ... ) $ yourMatrix
 qMapAll :: (Complex Float -> Int -> Int -> Complex Float) -> QMatrix -> QMatrix
@@ -145,3 +158,36 @@ a `mtimes` b
 				b_col = qVAsList b
 			in
 				qVec $ map sum [ zipWith prod (a_row r) b_col | r <- index ]
+
+qIsZero :: QMatrix -> Bool
+qIsZero (QMatrix m) = 
+		let
+			t   = sum [sum (m !! i) | i <- [0 .. length m - 1] ]
+			ups = 1 / 10^6 
+		in 
+			realPart t <= ups && imagPart t <= ups
+
+qTranspose :: QMatrix -> QMatrix
+qTranspose (QMatrix xs) = qMat $ transpose xs
+
+-- M^dagger = Adjoint matrix (conjugate transpose)
+qConjugateTranspose :: QMatrix -> QMatrix
+qConjugateTranspose mt = qMap conjugate $ qTranspose mt
+
+-- Hermitian matrix --> M^dagger = M
+qIsHermitian :: QMatrix -> Bool
+qIsHermitian mt = mt == qConjugateTranspose mt
+
+-- Unitary matrix --> M^dagger M = I <=> M^dagger = M^-1
+qIsUnitary :: QMatrix -> Bool
+qIsUnitary mt = 
+	let
+		id       = qEye (qDim mt)
+		m_dagger = qConjugateTranspose mt
+		dotprod  = m_dagger `dot` mt
+		-- M^dagger M = I
+		--  M^dagger M - I = 0 
+		fun      = \a b -> abs (a - b)
+		diff     = qMapDouble fun dotprod id
+	in
+		qIsZero diff

@@ -44,7 +44,7 @@ new_state' = (my_gate `gdot` hadamard2) `apply` new_state
 * toffoli
 
 ## Measure
-In this example, we are measuring the output state based on the probability of having each state
+In this example, we measure a qubit based on the probability of having each state
 ```Haskell
 measured =
 	let

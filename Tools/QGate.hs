@@ -16,7 +16,9 @@ qGateMatrix :: QGate -> QMatrix
 qGateMatrix (QGate mat) = mat
 
 qGate :: QMatrix -> QGate
-qGate mat = QGate mat
+qGate mat
+	| not (qIsUnitary mat) = error "Gate matrix must be unitary" 
+	| otherwise            = QGate mat
 
 qGateDim :: QGate -> Int
 qGateDim (QGate mat) = qDim mat
