@@ -6,7 +6,7 @@ afQuanta is a basic quantum computing library written in Haskell
 * A qubit only takes a 2^N vector as an input
 
 ```Haskell
--- |my_qubit'> = i|1>
+-- |my_qubit> = i|1>
 my_qubit = qBit $ qVec [0, 0 :+ 1]
 
 -- Say we want a qubit in the same direction as [1, 2,...8]
@@ -18,7 +18,7 @@ my_qubit' = qBit my_vec
 
 ## QGate / QMatrix
 * You can create your own quantum gate or use predefined ones
-* A gate is constructed using a QMatrix : a 2^N x 2^N matrix where all components are complex numbers
+* A gate is built using a QMatrix : a 2^N x 2^N matrix where all components are complex numbers
 * A gate should be unitary : it preserves unitary vectors
 
 ```Haskell
@@ -44,7 +44,7 @@ new_state' = (my_gate `gdot` hadamard2) `apply` new_state
 * toffoli
 
 ## Measure
-In this example we measure the output state according to the probability of having each state
+In this example, we are measuring the output state based on the probability of having each state
 ```Haskell
 measured =
 	let
