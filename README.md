@@ -77,6 +77,9 @@ matr_prod = a `dot` b
 -- Product between a Float number and a matrix
 floa_prod = 3 `times` a
 
+-- Product between a complex number and a matrix
+comp_prod = (1 :+ 1) `ctimes` a
+
 -- Product between a matrix and a vector
 matv_prod = a `mtimes` vec
 

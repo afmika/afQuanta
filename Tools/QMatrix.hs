@@ -114,6 +114,9 @@ qShow (QMatrix xs) =
 times :: Float -> QMatrix -> QMatrix
 n `times` mat = qMap (\v -> (n :+ 0) * v) mat
 
+ctimes :: (Complex Float) -> QMatrix -> QMatrix
+n `ctimes` mat = qMap (\v -> n*v) mat
+
 dot :: QMatrix -> QMatrix -> QMatrix
 a `dot` b
 		| qDim a /= qDim b = error "size a /= size b" 
