@@ -35,21 +35,20 @@ main =
 		measured = qObserve res_bit
 		mes_prob = qProbabilities measured
  	in
- 		do {
- 			putStrLn("-----------");
-	 		putStrLn ("psi = " ++ show psi);
-	 		putStrLn ("Observed psi   = " ++ show (observed_psi));
-	 		putStrLn ("Observed probs = " ++ show (observed_prob));
+ 		do
+ 			putStrLn $ "-----------"
+	 		putStrLn $ "psi = " ++ show psi
+	 		putStrLn $ "Observed psi   = " ++ show observed_psi
+	 		putStrLn $ "Observed probs = " ++ show observed_prob
 
-	 		putStrLn ("\nHadamard Gate");
-	 		qGateShow hadamard2;
+	 		putStrLn $ "\nHadamard Gate"
+	 		qGateShow hadamard2
 
-	 		putStrLn ("A.B");
-	 		qShow prod;
+	 		putStrLn $ "A.B"
+	 		qShow prod
 
-	 		putStrLn ("Mat . Vec = " ++ show result ++ "\n");
-	 		putStrLn ("H |0> = " ++ show res_bit);
-	 		putStrLn ("H |0> probs     = " ++ show probs);
-	 		putStrLn ("Observed H |0>  = " ++ show measured);
-	 		putStrLn ("Observed probs  = " ++ show mes_prob);
-	 	}
+	 		putStrLn $ "Mat . Vec = " ++ show result ++ "\n"
+	 		putStrLn $ "H |0> = " ++ show res_bit
+	 		putStrLn $ "H |0> probs     = " ++ show probs
+	 		putStrLn $ "Observed H |0>  = " ++ show measured
+	 		putStrLn $ "Observed probs  = " ++ show mes_prob
