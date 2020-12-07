@@ -70,4 +70,4 @@ run_tests =
 					)) 
 			True
 		putStrLn $ " [ -- ] Got rnd_sum = " ++ show rnd_sum
-		expect "rnd_sum to be somewhere between ]4500, 5500[ (if this fails try it again)" (rnd_sum > 4500 && rnd_sum < 5500) True
+		expect "rnd_sum to be somewhere between ]4500, 5500[ (if this fails try again)" (rnd_sum > 4500 && rnd_sum < 5500) True
