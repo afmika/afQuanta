@@ -69,4 +69,4 @@ run_tests =
 						[0.25, 0.25, 0.25, 0.25]
 					)) 
 			True
-		expect "rnd_sum to be between ]4000, 5500[ " (rnd_sum > 4000 && rnd_sum < 5500) True
+		expect "rnd_sum to be somewhere between ]4500, 5500[ " (rnd_sum > 4500 && rnd_sum < 5500) True
