@@ -57,7 +57,7 @@ qGateGenerator teta phi lambda =
 			cost_2 = cos (teta / 2) :+ 0
 		in
 			qGate $ qMat [
-				[  cost_2             ,     -exp(i*l) * sint_2 ],
+				[  cost_2             ,    -exp(i*l) * sint_2 ],
 				[  exp(i*p) * sint_2  , exp(i*(l+p)) * cost_2 ]
 			]
 
@@ -81,7 +81,7 @@ pauli_y = qGate $ qMat [
 		]
 -- Pauli-Z operates on a single qBit
 pauli_z = qGate $ qMat [
-			[1,  0],
+			[1,   0],
 			[0,  -1]
 		]
 
