@@ -162,7 +162,7 @@ a `mtimes` b
 qIsZero :: QMatrix -> Bool
 qIsZero (QMatrix m) = 
 		let
-			t   = sum [sum (m !! i) | i <- [0 .. length m - 1] ]
+			t   = abs $ sum [sum (m !! i) | i <- [0 .. length m - 1] ]
 		in 
 			realPart t <= v_upsilon && imagPart t <= v_upsilon
 
