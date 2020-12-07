@@ -27,6 +27,10 @@ qBitVec (QBit v) = v
 qBitDim :: QBit -> Int
 qBitDim qb = qVDim $ qBitVec qb
 
+-- inner product between two qubits
+qdot :: QBit -> QBit -> Complex Double
+(QBit a) `qdot` (QBit b) = a `vdot` b
+
 qProbabilities :: QBit -> [Double]
 qProbabilities (QBit (QVector xs)) = [ realPart ((abs m)^2) | m <- xs]
 
