@@ -27,21 +27,19 @@ qRand seed iteration = qRand (qPRNGDef seed) (iteration - 1)
 
 
 -- IO Operation (by which the outside world communicates with the program)
-qCurrentTime :: IO (Integer, Integer)
+qCurrentTime :: IO Double
 qCurrentTime = do
 		utc <- getCurrentTime
 		let 
-			dtime = toRational $ utctDayTime utc
-			sec   = numerator dtime
-			psec  = denominator dtime
-		return (sec, psec)
+			dtime = fromRational $ toRational $ utctDayTime utc
+		return dtime
 
 qIORand :: IO (Int)
 qIORand = do
-	(sec, psec) <- qCurrentTime
-	let
-		seed = (fromInteger sec) - (fromInteger psec)
-	return $ qRand (floor seed) 50
+	dtime <- qCurrentTime
+	let 
+		seed = fromInteger $ floor (10000 * dtime)
+	return $ qRand seed 50
 
 
 qIORandInf :: Int -> IO (Int)
@@ -64,8 +62,8 @@ qIORandSequenceCmplx xs begin current_seed limit
 
 qIORandSequence :: Int -> IO [Int]
 qIORandSequence limit = do
-	(a, b) <- qCurrentTime
-	let seed = a - b
+	dtime <- qCurrentTime
+	let seed = fromInteger $ floor (10000 * dtime)
 	return $ unsafePerformIO $ qIORandSequenceCmplx [] True  (fromInteger seed) limit
 
 qGetRandSeq limit = unsafePerformIO $ qIORandSequence limit

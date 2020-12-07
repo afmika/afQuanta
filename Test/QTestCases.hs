@@ -62,11 +62,12 @@ run_tests =
 		expect "qIsHermitian $ qMat [[1, 2], [3, 4]] to be False"
 			(qIsHermitian $ qMat [[1, 2], [3, 4]]) False
 
-		expect "(H (x) H) |u>(x)|v> to be have equal probabilities" 
+		expect "(H (x) H) |u>(x)|v> to have equal probabilities" 
 			(foldl (&&) 
 				True (zipWith areEqual 
 						(qProbabilities $ (hadamard2 `tprod` hadamard2) `apply` (qBit u `combine` qBit v))
 						[0.25, 0.25, 0.25, 0.25]
 					)) 
 			True
-		expect "rnd_sum to be somewhere between ]4500, 5500[ " (rnd_sum > 4500 && rnd_sum < 5500) True
+		putStrLn $ " [ -- ] Got rnd_sum = " ++ show rnd_sum
+		expect "rnd_sum to be somewhere between ]4500, 5500[ (if this fails try it again)" (rnd_sum > 4500 && rnd_sum < 5500) True
