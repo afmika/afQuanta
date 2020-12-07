@@ -37,6 +37,8 @@ main =
 		mes_prob = qProbabilities measured
  	in
  		do
+	 		run_tests
+ 			
  			putStrLn $ "-----------"
 	 		putStrLn $ "psi = " ++ show psi
 	 		putStrLn $ "Observed psi   = " ++ show observed_psi
@@ -53,5 +55,3 @@ main =
 	 		putStrLn $ "H |0> probs     = " ++ show probs
 	 		putStrLn $ "Observed H |0>  = " ++ show measured
 	 		putStrLn $ "Observed probs  = " ++ show mes_prob
-
-	 		run_tests
