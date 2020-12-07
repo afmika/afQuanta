@@ -26,21 +26,26 @@ vplus :: QVector -> QVector -> QVector
 	| length u /= length v = error "operands must have the same dimension"
 	| otherwise  = qVec [ (u !! i) + (v !! i) | i <- [0 .. length u - 1]]
 
-vdot :: QVector -> QVector -> (Complex Double)
-(QVector u) `vdot` (QVector v) = sum [ (u !! i) * (v !! i) | i <- [0 .. length u - 1] ]
+-- vector size
+qVDim :: QVector -> Int
+qVDim (QVector u) = length u
+
+-- inner product <u|v> = u1* v1 + u2* v2 + ...
+vdot :: QVector -> QVector -> Complex Double
+(QVector u) `vdot` (QVector v)
+	| length u /= length v = error "operands must have the same dimension"
+	| otherwise            = 
+		sum [ conjugate (u !! i) * (v !! i) | i <- [0 .. length u - 1] ]
 
 vtimes :: Double -> QVector -> QVector
 n `vtimes` (QVector v) = qVec [ (n :+ 0) * (v !! i) | i <- [0 .. length v - 1] ]
 
--- others
-qVDim :: QVector -> Int
-qVDim (QVector u) = length u
-
 qVMap :: (Complex Double -> Complex Double) -> QVector -> QVector
 qVMap func (QVector xs) = qVec $ map func xs;
 
+-- magnitude u = <u|u> or sqrt Sum |ui|^2  (since ui* ui = |ui|^2 )
 qVLength :: QVector -> Double
-qVLength (QVector xs) = sqrt $ realPart $ sum $ map (\a -> (abs a) ^ 2) xs
+qVLength u = sqrt $ realPart $ u `vdot` u
 
 qIsVUnitary :: QVector -> Bool
 qIsVUnitary vec = areEqual 1.0 (qVLength vec)
