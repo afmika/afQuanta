@@ -30,7 +30,7 @@ vplus :: QVector -> QVector -> QVector
 qVDim :: QVector -> Int
 qVDim (QVector u) = length u
 
--- inner product <u|v> = u1* v1 + u2* v2 + ...
+-- inner product <u|v> = u1* v1 + u2* v2 + ... where ui* = (x + iy)* = (x - iy)
 vdot :: QVector -> QVector -> Complex Double
 (QVector u) `vdot` (QVector v)
 	| length u /= length v = error "operands must have the same dimension"
