@@ -7,6 +7,7 @@ module QRandom where
 
 import Data.Time
 import Data.Ratio
+import System.IO.Unsafe ( unsafePerformIO )
 
 -- helpers
 
@@ -39,9 +40,8 @@ qIORand :: IO (Int)
 qIORand = do
 	(sec, psec) <- qCurrentTime
 	let
-		seed = sec
-		iter = 1 + (psec `mod` 99)
-	return $ qRand (fromInteger seed) (fromInteger iter)
+		seed = (fromInteger sec) - (fromInteger psec)
+	return $ qRand (floor seed) 50
 
 
 qIORandInf :: Int -> IO (Int)
@@ -53,6 +53,22 @@ qIORandFloat :: IO (Double)
 qIORandFloat = do
 	out <- qIORandInf bigint
 	return (fromIntegral out / fromIntegral bigint)
+
+-- generates a random list
+qIORandSequenceCmplx :: [Int] -> Bool -> Int -> Int -> IO [Int]
+qIORandSequenceCmplx xs begin current_seed limit
+	| limit == 0   = return xs
+	| otherwise    = do
+		let next_seed = qRand current_seed 1
+		return $ unsafePerformIO $ qIORandSequenceCmplx (xs ++ [next_seed]) False next_seed (limit - 1)
+
+qIORandSequence :: Int -> IO [Int]
+qIORandSequence limit = do
+	(a, b) <- qCurrentTime
+	let seed = a - b
+	return $ unsafePerformIO $ qIORandSequenceCmplx [] True  (fromInteger seed) limit
+
+qGetRandSeq limit = unsafePerformIO $ qIORandSequence limit
 
 
 qRandPickIndex :: [Double] -> Int -> Bool -> IO Int

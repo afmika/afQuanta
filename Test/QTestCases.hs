@@ -16,11 +16,11 @@ expect info a b
 	| a /= b    = putStrLn $ " [Fail] -- Expect " ++ info
 	| otherwise = putStrLn $ " [ ok ] -- Expect " ++ info
 
-random_test rand xs 0     = return xs
-random_test rand xs count = do
-	let nxs = xs ++ [if (unsafePerformIO rand) < 5 then 1 else 0]
-	random_test (qIORandInf 10) nxs (count - 1)
-
+random_test :: Int -> [Int]
+random_test limit = 
+	-- generates a list of odd numbers <= 7 : {1, 3, 5, 7}
+	-- should get 50%, 50% for {1,3}, {5, 7} 
+	map (\x -> if (x `mod` 8) < 5 then 1 else 0) $ qGetRandSeq limit
 
 run_tests = 
 	let 
@@ -28,6 +28,8 @@ run_tests =
 		v = qVec [1, 0]
 		w = qVec $ take 4 (repeat 7)
 		z = qVec [1, 1.5]
+
+		rnd_sum = sum (random_test 10000)
 	in do
 		putStrLn "\n-- QTestCases --"
 
@@ -67,4 +69,4 @@ run_tests =
 						[0.25, 0.25, 0.25, 0.25]
 					)) 
 			True
-		-- print $ unsafePerformIO (random_test (qIORandInf 10) [] 50)
+		expect "rnd_sum to be between ]4000, 5500[ " (rnd_sum > 4000 && rnd_sum < 5500) True
