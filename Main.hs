@@ -10,6 +10,7 @@ import QVector
 import QMatrix
 import QBit
 import QGate
+import QTestCases
 
 main :: IO ()
 main = 
@@ -52,3 +53,5 @@ main =
 	 		putStrLn $ "H |0> probs     = " ++ show probs
 	 		putStrLn $ "Observed H |0>  = " ++ show measured
 	 		putStrLn $ "Observed probs  = " ++ show mes_prob
+
+	 		run_tests
