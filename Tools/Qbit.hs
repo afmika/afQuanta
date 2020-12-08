@@ -64,9 +64,9 @@ qIOObserve :: QBit -> IO QBit
 qIOObserve (QBit (QVector xs)) = do
 	picked <- 
 			if (qEqualProbabilities $ QBit (QVector xs)) then 
-				qRandPickIndex (qProbabilities $ QBit (QVector xs)) 0 False
-			else
 				qRandPickIndexUniform (qProbabilities $ QBit (QVector xs))
+			else
+				qRandPickIndex (qProbabilities $ QBit (QVector xs)) 0 False
 
 	let len   = length xs
 	let index = [0 .. len - 1]
