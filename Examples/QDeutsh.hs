@@ -26,6 +26,7 @@ oracle_uf state =
 		q0  = state !! 0
 		q1  = state !! 1
 		-- in the real world, this operation would take a single query
+		-- we are doing a little simulation here
 		q0' = 
 			(qGate $ qMat [
 					[(-1)^(f 0), 0], 
@@ -60,5 +61,5 @@ run_deutsh_algorithm =
 			putStrLn $ "Theorical probabilities :"
 			putStrLn $ "q0 = " ++ (show $ qProbabilities q0)
 			putStrLn $ "q1 = " ++ (show $ qProbabilities q1)
-			putStrLn $ "Result :"
+			putStrLn $ "Result (|1> => f is balanced, |0> => f is constant)"
 			putStrLn $ qBitInterpret measured

@@ -39,7 +39,7 @@ main =
  		do
 	 		run_tests
  			
- 			putStrLn $ "-----------"
+ 			putStrLn $ "\n -----------"
 	 		putStrLn $ "psi = " ++ show psi
 	 		putStrLn $ "Observed psi   = " ++ show observed_psi
 	 		putStrLn $ "Observed probs = " ++ show observed_prob

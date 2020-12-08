@@ -9,6 +9,7 @@ import QGate
 import QRandom
 import System.IO.Unsafe ( unsafePerformIO )
 
+import QDeutsh
 
 
 -- test Definition
@@ -18,9 +19,9 @@ expect info a b
 
 random_test :: Int -> [Int]
 random_test limit = 
-	-- generates a list of odd numbers <= 7 : {1, 3, 5, 7}
-	-- should get 50%, 50% for {1,3}, {5, 7} 
-	map (\x -> if (x `mod` 8) < 5 then 1 else 0) $ qGetRandSeq limit
+	-- generates a list of odd numbers <= 16 : {1, 3, 5, 7, 9, 11, 13, 15}
+	-- should get 50%, 50% for {1, 3, 5, 7} -> 1, {9, 11, 13, 15} -> 0 
+	map (\x -> if (x `mod` 16) < 8 then 1 else 0) $ qGetRandSeq limit
 
 run_tests = 
 	let 
@@ -29,7 +30,7 @@ run_tests =
 		w = qVec $ take 4 (repeat 7)
 		z = qVec [1, 1.5]
 
-		rnd_sum = sum (random_test 10000)
+		rnd_sum = sum (random_test 1000)
 	in do
 		putStrLn "\n-- QTestCases --"
 
@@ -70,4 +71,7 @@ run_tests =
 					)) 
 			True
 		putStrLn $ " [ -- ] Got rnd_sum = " ++ show rnd_sum
-		expect "rnd_sum to be somewhere between ]4500, 5500[ (if this fails try again)" (rnd_sum > 4500 && rnd_sum < 5500) True
+		expect "rnd_sum to be somewhere between ]400, 600[ (if this fails try again)" (rnd_sum > 400 && rnd_sum < 600) True
+
+		putStrLn $ "\n [ -- ] Running the Deutsh algorithm..."
+		run_deutsh_algorithm	
