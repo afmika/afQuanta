@@ -24,6 +24,9 @@ qBit vec
 qBitVec :: QBit -> QVector
 qBitVec (QBit v) = v
 
+qBitAsList :: QBit -> [Complex Double]
+qBitAsList (QBit (QVector xs)) = xs
+
 qBitDim :: QBit -> Int
 qBitDim qb = qVDim $ qBitVec qb
 
@@ -76,3 +79,16 @@ qIOObserve (QBit (QVector xs)) = do
 
 -- IO QBit --> QBit
 qObserve qb = unsafePerformIO $ qIOObserve qb
+
+
+qBitInterpret :: QBit -> String
+qBitInterpret qb =
+	if qEqualProbabilities qb then "State = In superposition"
+	else 
+		let -- observed
+			xs  = qProbabilities qb
+			len = length xs
+			f   = \i -> if areEqual (xs !! i) 1.0 then i else 0
+			idx = sum [ f i | i <- [0 .. len - 1]]
+		in
+			"State = |" ++ (show idx) ++ ">"
