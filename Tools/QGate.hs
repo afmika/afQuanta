@@ -92,6 +92,14 @@ swap_s = qGate $ qMat [
 			[0, 1, 0, 0],
 			[0, 0, 0, 1]
 		]
+-- CNOT or CX gate
+-- cx |a b> = |a a (+) b>
+cnot_cx = qGate $ qMat [
+			[1, 0, 0, 0],
+			[0, 1, 0, 0],
+			[0, 0, 0, 1],
+			[0, 0, 1, 0]
+		]
 
 -- Toffoli (CCNOT) operates on 3 qBits
 toffoli = qGate $ qMat [

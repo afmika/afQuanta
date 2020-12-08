@@ -43,7 +43,7 @@ n `vtimes` (QVector v) = qVec [ (n :+ 0) * (v !! i) | i <- [0 .. length v - 1] ]
 qVMap :: (Complex Double -> Complex Double) -> QVector -> QVector
 qVMap func (QVector xs) = qVec $ map func xs;
 
--- magnitude u = <u|u> or sqrt Sum |ui|^2  (since ui* ui = |ui|^2 )
+-- magnitude u = sqrt <u|u> or sqrt Sum |ui|^2  (since ui* ui = |ui|^2 )
 qVLength :: QVector -> Double
 qVLength u = sqrt $ realPart $ u `vdot` u
 
