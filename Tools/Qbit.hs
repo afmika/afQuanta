@@ -24,6 +24,16 @@ qBit vec
 qBitVec :: QBit -> QVector
 qBitVec (QBit v) = v
 
+qBitFromVal :: Int -> Int -> QBit
+qBitFromVal dim val
+	| dim <= val  = error "Dim should be large enough to encode val"
+	| otherwise   = qBit $ qVec [ 
+						if i == val then (1:+0) else (0:+0) | i <- [0 .. dim - 1]
+					]
+
+qBitCreate :: [Complex Double] -> QBit
+qBitCreate xs = qBit $ qVec xs
+
 qBitAsList :: QBit -> [Complex Double]
 qBitAsList (QBit (QVector xs)) = xs
 

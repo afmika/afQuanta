@@ -20,6 +20,9 @@ qGate mat
 	| not (qIsUnitary mat) = error "Gate matrix must be unitary" 
 	| otherwise            = QGate mat
 
+qGateCreate :: [[Complex Double]] -> QGate
+qGateCreate xs = qGate $ qMat xs
+
 qGateDim :: QGate -> Int
 qGateDim (QGate mat) = qDim mat
 
@@ -63,24 +66,24 @@ hadamard2 = qGate ((1 / sqrt 2) `times` qMat [
 		])
 
 -- Pauli-X (= NOT gate) operates on a single qBit
-pauli_x = qGate $ qMat [
+pauli_x = qGateCreate [
 			[0,  1],
 			[1,  0]
 		]
 
 -- Pauli-Y operates on a single qBit
-pauli_y = qGate $ qMat [
+pauli_y = qGateCreate [
 			[0,  (0 :+ 1)],
 			[(0 :+ 1),  0]
 		]
 -- Pauli-Z operates on a single qBit
-pauli_z = qGate $ qMat [
+pauli_z = qGateCreate [
 			[1,   0],
 			[0,  -1]
 		]
 
 -- Swap (S) operates on 2 qBits
-swap_s = qGate $ qMat [
+swap_s = qGateCreate [
 			[1, 0, 0, 0],
 			[0, 0, 1, 0],
 			[0, 1, 0, 0],
@@ -88,7 +91,7 @@ swap_s = qGate $ qMat [
 		]
 -- CNOT or CX gate
 -- cx |a b> = |a a (+) b>
-cnot_cx = qGate $ qMat [
+cnot_cx = qGateCreate [
 			[1, 0, 0, 0],
 			[0, 1, 0, 0],
 			[0, 0, 0, 1],
@@ -96,7 +99,7 @@ cnot_cx = qGate $ qMat [
 		]
 
 -- Toffoli (CCNOT) operates on 3 qBits
-toffoli = qGate $ qMat [
+toffoli = qGateCreate [
 			[1, 0, 0, 0, 0, 0, 0, 0],
 			[0, 1, 0, 0, 0, 0, 0, 0],
 			[0, 0, 1, 0, 0, 0, 0, 0],
