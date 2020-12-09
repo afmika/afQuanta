@@ -59,7 +59,7 @@ run_deutsh_algorithm =
 		do
 			putStrLn $ "Deutsh algorithm -- is f balanced ?"
 			putStrLn $ "Theorical probabilities :"
-			putStrLn $ "q0 = " ++ (show $ qProbabilities q0)
-			putStrLn $ "q1 = " ++ (show $ qProbabilities q1)
+			putStrLn $ "- q0 \n" ++ qBitGraph q0
+			putStrLn $ "- q1 \n" ++ qBitGraph q1
 			putStrLn $ "Result (|1> => f is balanced, |0> => f is constant)"
-			putStrLn $ qBitInterpret measured
+			putStrLn $ qBitGraph measured

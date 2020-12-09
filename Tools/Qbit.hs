@@ -90,21 +90,16 @@ qBitGraph qb =
 		probs = map (\x -> x * max_height) $ ps
 		len   = length probs
 		toprc = \i -> roundDec 2 ((ps !! i) * 100)
-		putLn = \i p -> "[] " ++ (show i) 
+
+		format_idxb2 = \i -> formatStrNumDigits (show (dec2BinNum i)) (fromEnum $ log (fromIntegral len) / log 2)
+		(d, r) = (len - 1) `divMod` 10
+		format_idx   = \i -> formatStrNumDigits (show i) (if d > 0 then (d+1) else 1)
+
+		tob2  = \i -> " |" ++ (format_idxb2 i) ++ ">"
+		putLn = \i p -> 
+				"[" ++ (format_idx i) ++ "]" ++ (tob2 i) 
 				++ " | " ++ intercalate "" (take p $ repeat ":")
 				++ " " ++ (show $ toprc i ) ++ "%"
 	in
-		intercalate "\n" [ putLn i (round (probs !! i)) | i <- [0 .. len - 1] ]
-
-
-qBitInterpret :: QBit -> String
-qBitInterpret qb =
-	if qEqualProbabilities qb then "State = In superposition"
-	else 
-		let -- observed
-			xs  = qProbabilities qb
-			len = length xs
-			f   = \i -> if areEqual (xs !! i) 1.0 then i else 0
-			idx = sum [ f i | i <- [0 .. len - 1]]
-		in
-			"State = |" ++ (show idx) ++ ">"
+		(intercalate "\n" [ putLn i (round (probs !! i)) | i <- [0 .. len - 1] ])
+		++ "\n"

@@ -46,6 +46,12 @@ dec2BinNum n =
 	in
 		sum [ (res !! i) * 10^i | i <- [0 .. len - 1] ]
 
+formatStrNumDigits :: String -> Int -> String
+formatStrNumDigits nstr max_len
+	| max_len <= length nstr = nstr
+	| otherwise              = 
+		formatStrNumDigits ('0':nstr) max_len
+
 kroneker_prod ::  [[Complex Double]] -> [[Complex Double]] -> [[Complex Double]]
 kroneker_prod xs ys =
     let f = fmap . fmap . (*) -- Multiplication by n over list of lists
