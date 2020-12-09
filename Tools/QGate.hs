@@ -10,7 +10,7 @@ import QVector
 import QMatrix
 import QBit
 
-data QGate = QGate (QMatrix) deriving (Show, Eq)
+data QGate = QGate (QMatrix) deriving (Eq)
 
 qGateMatrix :: QGate -> QMatrix
 qGateMatrix (QGate mat) = mat
@@ -34,12 +34,6 @@ gate `apply` bit =
 -- tensor product
 tprod :: QGate -> QGate -> QGate
 (QGate a) `tprod` (QGate b) = qGate $ a `kprod` b
-
-qGateShow (QGate qmat) = 
-	do {
-		putStrLn ("Gate dim = " ++ (show $ qGateDim (QGate qmat)));
-		qShow qmat;
-	}
 
 -- Gate composition
 gdot :: QGate -> QGate -> QGate
@@ -112,3 +106,12 @@ toffoli = qGate $ qMat [
 			[0, 0, 0, 0, 0, 0, 0, 1],
 			[0, 0, 0, 0, 0, 0, 1, 0]
 		]
+
+
+instance Show QGate where
+	show (QGate mt) =
+		text ++ (show mt)
+		where
+			text = "Gate dim = " ++ (show $ qGateDim (QGate mt))
+
+		

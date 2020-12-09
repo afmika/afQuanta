@@ -7,13 +7,14 @@ module QVector where
 
 import QMath
 import Data.Complex
+import Data.List
 
 -- helpers
 areEqual :: Double -> Double -> Bool
 areEqual a b = abs(a - b) <= v_upsilon
 
 -- defs
-data QVector = QVector [Complex Double] deriving (Show, Eq)
+data QVector = QVector [Complex Double] deriving (Eq)
 qVec :: [Complex Double] -> QVector
 qVec list = QVector list
 
@@ -65,3 +66,6 @@ qHasDimPowOf2 vec =
 		floorn = fromIntegral (floor n)
 	in
 		areEqual n floorn
+
+instance Show QVector where
+	show (QVector xs) = "[" ++ intercalate ", " (map formatComplexStrict xs) ++ "]"

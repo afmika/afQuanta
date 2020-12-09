@@ -24,7 +24,7 @@ posListAt :: [[(Complex Double)]] -> Int -> Int -> (Complex Double)
 posListAt xs y x = (xs !! y) !! x
 
 -- defs
-data QMatrix = QMatrix [[Complex Double]] deriving (Show, Eq)
+data QMatrix = QMatrix [[Complex Double]] deriving (Eq)
 
 qMat :: [[Complex Double]] -> QMatrix
 qMat xs
@@ -95,17 +95,6 @@ qMapAll func (QMatrix mat) =
 -------------------------------------------------------
 -- I expect you to understand this.... oh future me  --
 -------------------------------------------------------
-qShow (QMatrix xs) =
-	let
-		n     = qDim (QMatrix xs)
-		index = [0 .. (n-1)]
-		mrow  = \r -> [ (posListAt xs) r c | c <- index ]
-		joinCols = \row -> intercalate "   " (map formatComplex $ row)
-	in
-		do {
-			putStrLn ( intercalate " x " [show n, show n] );
-			putStrLn $ unlines $ [ joinCols (mrow r) | r <- index]
-		}
 
 times :: Double -> QMatrix -> QMatrix
 n `times` mat = qMap (\v -> (n :+ 0) * v) mat
@@ -183,3 +172,16 @@ qIsUnitary mt =
 		--  M^dagger M = I
 		-- (M^dagger M) - I = 0 
 		qIsZero $ (m_dagger `dot` mt) `mdelta` id
+
+
+instance Show QMatrix where
+	show (QMatrix xs) =
+		let
+			n     = qDim (QMatrix xs)
+			index = [0 .. (n-1)]
+			mrow  = \r -> [ (posListAt xs) r c | c <- index ]
+			joinCols = \row -> intercalate "   " (map formatComplex $ row)
+		in
+			( intercalate " x " [show n, show n] ) 
+			++ "\n" ++
+			unlines [ joinCols (mrow r) | r <- index]

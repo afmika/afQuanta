@@ -13,7 +13,7 @@ import Data.Complex
 import Data.List
 import System.IO.Unsafe ( unsafePerformIO )
 
-data QBit = QBit (QVector) deriving (Show, Eq)
+data QBit = QBit (QVector) deriving (Eq)
 
 qBit :: QVector -> QBit
 qBit vec
@@ -103,3 +103,15 @@ qBitGraph qb =
 	in
 		(intercalate "\n" [ putLn i (round (probs !! i)) | i <- [0 .. len - 1] ])
 		++ "\n"
+
+-- show override
+instance Show QBit where
+  show (QBit (QVector xs)) = 
+  	let
+  		len = length xs
+  		format_idxb2 = \i -> formatStrNumDigits (show (dec2BinNum i)) (fromEnum $ log (fromIntegral len) / log 2)
+  		fmter = \v -> (formatComplexStrict v)
+  		right = \v -> " |" ++ v ++ ">"
+  		res   = [ (fmter $ xs !! i) ++ right (format_idxb2 i) | i <- [0 .. len - 1]]
+  	in
+  		intercalate " + " res

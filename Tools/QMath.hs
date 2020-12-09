@@ -25,6 +25,18 @@ formatComplex c =
 	in
 		(show a) ++ sg ++ "i" ++ (show $ abs b)
 
+formatComplexStrict :: Complex Double -> String
+formatComplexStrict c = 
+	let
+		a  = roundDec 2 (realPart c)
+		b  = roundDec 2 (imagPart c)
+		sg = if b < 0 then " - " else " + "
+		left  = if a == 0 then "" else (show a)
+		right = if b == 0 then "" else (sg ++ "i" ++ (show $ abs b))
+		total = left ++ right
+	in
+		if total == "" then "0" else total
+
 
 to_base :: [Int] -> Int -> [Int]
 to_base xs n
