@@ -95,7 +95,7 @@ qObserve qb = unsafePerformIO $ qIOObserve qb
 qBitGraph :: QBit -> String
 qBitGraph qb =
 	let
-		max_height = 50.0
+		max_height = 30.0
 		ps    = qProbabilities qb
 		probs = map (\x -> x * max_height) $ ps
 		len   = length probs

@@ -10,6 +10,7 @@ import QRandom
 import System.IO.Unsafe ( unsafePerformIO )
 
 import QDeutsh
+import QGrover
 
 
 -- test Definition
@@ -74,4 +75,6 @@ run_tests =
 		expect "rnd_sum to be somewhere between ]400, 600[ (if this fails try again)" (rnd_sum > 400 && rnd_sum < 600) True
 
 		putStrLn $ "\n [ -- ] Running the Deutsh algorithm..."
-		run_deutsh_algorithm	
+		run_deutsh_algorithm
+		putStrLn $ "\n [ -- ] Running the Grover's algorithm..."
+		run_grover_algorithm
