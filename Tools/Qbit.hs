@@ -101,8 +101,7 @@ qBitGraph qb =
 				++ " | " ++ intercalate "" (take p $ repeat ":")
 				++ " " ++ (show $ toprc i ) ++ "%"
 	in
-		(intercalate "\n" [ putLn i (round (probs !! i)) | i <- [0 .. len - 1] ])
-		++ "\n"
+		intercalate "\n" [ putLn i (round (probs !! i)) | i <- [0 .. len - 1] ]
 
 -- show override
 instance Show QBit where
