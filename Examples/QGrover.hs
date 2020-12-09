@@ -1,7 +1,7 @@
 {-
 	Grover's algorithm using the amplitude amplification trick
 
-	This example 2-qubits
+	This example uses 2-qubits (can operate on 2^2 = 4 items)
 -}
 
 module QGrover where
@@ -35,7 +35,7 @@ run_grover_algorithm =
 		-- diffusor
 		h_out   = (hadamard2 `tprod` hadamard2) `apply` or_out
 		z_out   = (pauli_z `tprod` pauli_z) `apply` h_out
-		cz_gate = uw -- in our case it co
+		cz_gate = uw
 		cz_out  = cz_gate `apply` z_out
 		output  = (hadamard2 `tprod` hadamard2) `apply` cz_out
 		---------
