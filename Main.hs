@@ -5,11 +5,6 @@
 
 module Main where
 
-import Data.Complex
-import QVector
-import QMatrix
-import QBit
-import QGate
 import QTestCases
 
 main :: IO ()
