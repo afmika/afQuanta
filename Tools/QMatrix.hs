@@ -11,23 +11,6 @@ import QMath
 import Data.Complex
 import Data.List
 
--- helpers
-roundDec :: Int -> Double -> Double
-roundDec d n = up / pp
-	where
-		pp   = 10^d
-		nup  = n * pp
-		up   = fromInteger (round nup)
-
-formatComplex :: Complex Double -> String
-formatComplex c = 
-	let
-		a  = roundDec 2 (realPart c)
-		b  = roundDec 2 (imagPart c)
-		sg = if b < 0 then " - " else " + "
-	in
-		(show a) ++ sg ++ "i" ++ (show $ abs b)
-
 isSquare xs = 
 	let
 		row_len  = length xs

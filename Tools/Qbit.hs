@@ -80,6 +80,22 @@ qIOObserve (QBit (QVector xs)) = do
 -- IO QBit --> QBit
 qObserve qb = unsafePerformIO $ qIOObserve qb
 
+-- Output format
+
+qBitGraph :: QBit -> String
+qBitGraph qb =
+	let
+		max_height = 50.0
+		ps    = qProbabilities qb
+		probs = map (\x -> x * max_height) $ ps
+		len   = length probs
+		toprc = \i -> roundDec 2 ((ps !! i) * 100)
+		putLn = \i p -> "[] " ++ (show i) 
+				++ " | " ++ intercalate "" (take p $ repeat ":")
+				++ " " ++ (show $ toprc i ) ++ "%"
+	in
+		intercalate "\n" [ putLn i (round (probs !! i)) | i <- [0 .. len - 1] ]
+
 
 qBitInterpret :: QBit -> String
 qBitInterpret qb =
