@@ -38,7 +38,7 @@ oracle_uf state =
 run_deutsh_algorithm =
 	let
 		state0 = [
-				qBitFromVal 2 0, -- |0>
+				qBitFromVal 1 0, -- |0>
 				qBitCreate [1 / sqrt 2, -1 / sqrt 2] -- 1/ sqrt 2 (|1> - |0>)
 			]
 

@@ -23,8 +23,9 @@ uw = qGateCreate [
 run_grover_algorithm =
 	let
 		-- initializing
-		q0  = qBitFromVal 2 0 -- |0>
-		q1  = qBitFromVal 2 0 -- |0>
+		reg_size = 1
+		q0  = qBitFromVal reg_size 0 -- |0>
+		q1  = qBitFromVal reg_size 0 -- |0>
 		reg = q0 `combine` q1 -- |00>
 
 		-- H on the input

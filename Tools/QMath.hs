@@ -56,7 +56,7 @@ dec2BinNum n =
 		res = dec2BinList n
 		len = length res
 	in
-		sum [ (res !! i) * 10^i | i <- [0 .. len - 1] ]
+		sum [ (res !! i) * 10^(len - i - 1) | i <- [0 .. len - 1] ]
 
 formatStrNumDigits :: String -> Int -> String
 formatStrNumDigits nstr max_len
