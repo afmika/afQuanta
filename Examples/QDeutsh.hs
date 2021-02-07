@@ -7,6 +7,7 @@ import QBit
 import QGate
 
 {-
+	author : afmika
 	Given an unknown function f : {0, 1} -> {0, 1}
 	Compute f(x) (+) f(y)
 

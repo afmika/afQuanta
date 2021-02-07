@@ -1,6 +1,6 @@
 {-
+	author : afmika
 	Grover's algorithm using the amplitude amplification trick
-
 	This example uses 2-qubits (can operate on 2^2 = 4 items)
 -}
 
