@@ -1,5 +1,8 @@
 # afQuanta
-afQuanta is a basic quantum computing library written in Haskell
+afQuanta is a basic quantum computing library written in Haskell.
+I don't expect this to be something really big but it does the job. Lol</br>
+I hope to can get some feedbacks from you ! </br>
+You are free to mail me : afmichael73@gmail.com
 
 ## QBit / QVector
 * You can create a `QBit` from a `QVector`, a special kind of vector where all components are complex numbers, the input vector should be unitary.
