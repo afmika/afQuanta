@@ -134,9 +134,10 @@ a `mtimes` b
 qIsZero :: QMatrix -> Bool
 qIsZero (QMatrix m) = 
         let
-            t   = abs $ sum [sum (m !! i) | i <- [0 .. length m - 1] ]
+            cIsZero c  = (realPart $ abs c) <= v_upsilon
+            allZero xs = foldl (&&) True (map cIsZero xs) 
         in 
-            realPart t <= v_upsilon && imagPart t <= v_upsilon
+            foldl (&&) True [allZero (m !! i) | i <- [0 .. length m - 1]]
 
 qTranspose :: QMatrix -> QMatrix
 qTranspose (QMatrix xs) = qMat $ transpose xs
