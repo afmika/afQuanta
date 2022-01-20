@@ -7,13 +7,13 @@ import QBit
 import QGate
 
 {-
-	author : afmika
-	Given an unknown function f : {0, 1} -> {0, 1}
-	Compute f(x) (+) f(y)
+    author : afmika
+    Given an unknown function f : {0, 1} -> {0, 1}
+    Compute f(x) (+) f(y)
 
-	=> Classical solution, two queries : a = f(x), b = f(y) then a (+) b 	
-	=> Quantum solution, a single query is enough!
-	=> f is balanced -> f(0) (+) f(1) = 1 otherwise f is constant
+    => Classical solution, two queries : a = f(x), b = f(y) then a (+) b 	
+    => Quantum solution, a single query is enough!
+    => f is balanced -> f(0) (+) f(1) = 1 otherwise f is constant
 -}
 
 a `xor` b = if a == b then 0 else 1
@@ -23,46 +23,46 @@ a `xor` b = if a == b then 0 else 1
 f x = x `xor` 1
 
 oracle_uf state = 
-	let
-		q0  = state !! 0
-		q1  = state !! 1
-		-- in the real world, this operation would take a single query
-		-- we are doing a little simulation here
-		q0' = 
-			(qGate $ qMat [
-					[(-1)^(f 0), 0], 
-					[0, (-1)^(f 1)]
-			]) `apply` q0 
-	in
-		[q0', q1]
+    let
+        q0  = state !! 0
+        q1  = state !! 1
+        -- in the real world, this operation would take a single query
+        -- we are doing a little simulation here
+        q0' = 
+            (qGate $ qMat [
+                    [(-1)^(f 0), 0], 
+                    [0, (-1)^(f 1)]
+            ]) `apply` q0 
+    in
+        [q0', q1]
 
 run_deutsh_algorithm =
-	let
-		state0 = [
-				qBitFromVal 1 0, -- |0>
-				qBitCreate [1 / sqrt 2, -1 / sqrt 2] -- 1/ sqrt 2 (|1> - |0>)
-			]
+    let
+        state0 = [
+                qBitFromVal 1 0, -- |0>
+                qBitCreate [1 / sqrt 2, -1 / sqrt 2] -- 1/ sqrt 2 (|1> - |0>)
+            ]
 
-		-- Hadamard on the first register
-		state1 = [
-				hadamard2 `apply` (state0 !! 0),
-				state0 !! 1
-			]
+        -- Hadamard on the first register
+        state1 = [
+                hadamard2 `apply` (state0 !! 0),
+                state0 !! 1
+            ]
 
-		-- Uf on both registers
-		state2 = oracle_uf state1 
+        -- Uf on both registers
+        state2 = oracle_uf state1 
 
-		q0 = hadamard2 `apply` (state2 !! 0)
-		q1 = state2 !! 1
+        q0 = hadamard2 `apply` (state2 !! 0)
+        q1 = state2 !! 1
 
-		measured = qObserve q0
-	in
-		do
-			putStrLn $ "Deutsh algorithm -- is f balanced ?"
-			putStrLn $ "Theorical probabilities :"
-			putStrLn $ "|q0> = " ++ show q0
-			putStrLn $ qBitGraph q0
-			putStrLn $ "|q1> = " ++ show q1
-			putStrLn $ qBitGraph q1
-			putStrLn $ "Result (|1> => f is balanced, |0> => f is constant)"
-			putStrLn $ qBitGraph measured
+        measured = qObserve q0
+    in
+        do
+            putStrLn $ "Deutsh algorithm -- is f balanced ?"
+            putStrLn $ "Theorical probabilities :"
+            putStrLn $ "|q0> = " ++ show q0
+            putStrLn $ qBitGraph q0
+            putStrLn $ "|q1> = " ++ show q1
+            putStrLn $ qBitGraph q1
+            putStrLn $ "Result (|1> => f is balanced, |0> => f is constant)"
+            putStrLn $ qBitGraph measured
