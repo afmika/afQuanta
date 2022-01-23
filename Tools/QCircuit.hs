@@ -22,4 +22,4 @@ qCircuitCreate xs
 
 
 qCircuitShow (QCircuit xs) = 
-    intercalate " " (map show xs)
+    intercalate "\n" (map show xs)

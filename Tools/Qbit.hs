@@ -31,6 +31,9 @@ qBitFromVal reg_size val
                         if i == val then (1:+0) else (0:+0) | i <- [0 .. (2^reg_size) - 1]
                     ]
 
+qSingleBit :: Int -> QBit
+qSingleBit = qBitFromVal 1
+
 qBitCreate :: [Complex Double] -> QBit
 qBitCreate xs = qBit $ qVec xs
 
