@@ -11,7 +11,7 @@ import System.IO.Unsafe ( unsafePerformIO )
 
 import QDeutsh
 import QGrover
-import QAdder
+import QBellPair
 
 
 -- test Definition
@@ -79,5 +79,5 @@ run_tests =
         run_deutsh_algorithm
         putStrLn $ "\n [ -- ] Running the Grover's algorithm..."
         run_grover_algorithm
-        putStrLn $ "\n [ -- ] Running the adder algorithm..."
-        run_adder_algorithm
+        putStrLn $ "\n [ -- ] Creating the Bell Pair ..."
+        run_bell_pair
