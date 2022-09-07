@@ -1,6 +1,6 @@
 {-
     author : afmika
-    A simple algorithm to perform an addition 
+    Bell Pair creation
 -}
 
 module QBellPair where

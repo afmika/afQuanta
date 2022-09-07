@@ -37,8 +37,8 @@ run_tests =
         putStrLn "\n-- QTestCases --"
 
         expect "Assertion to be True" True True
-        expect "areEqual 0 1/10^-7 to be True " (areEqual 0 0.0000001 ) True
-        expect "areEqual 0 1/10^-6 to be False" (areEqual 0 0.00001 ) False
+        expect "areEqual 0 1/10^7 to be True " (areEqual 0 0.0000001 ) True
+        expect "areEqual 0 1/10^6 to be False" (areEqual 0 0.00001 ) False
         expect "sqrt Re(<u|u>) = qVLength u to be True" (areEqual (sqrt $ realPart $ u `vdot` u) (qVLength $ u)) True
         
         expect "qVNormalize u to be unitary" (areEqual 1 (qVLength $ qVNormalize u)) True
